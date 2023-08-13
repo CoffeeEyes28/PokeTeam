@@ -1,33 +1,55 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import getPokemon  from './assets/js/API.js'
+import "./app.css"
+import Header from './components/Header'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [pokemomTeam, setPokemonTeam] = [];
+
+
+ 
+
+  async function generateMon () {
+
+    const randomId = Math.floor(Math.random() * 1282 )
+
+      const pokemon = await getPokemon(randomId)
+
+      const pokemonData = pokemon.data
+
+      console.log(pokemonData)
+
+      const newPoke = {
+        id: pokemonData.id,
+        name: pokemonData.name,
+        image: pokemonData.sprites.front_default
+      }
+
+        console.log(newPoke)
+     
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <Header />
+    
+      <div className='main-container'>
+        <h2>Generate your team</h2>
+        <button onClick={generateMon}>Generate</button>
+
+
+
+
+
+
+
+
+
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
+
+      
     </>
   )
 }
