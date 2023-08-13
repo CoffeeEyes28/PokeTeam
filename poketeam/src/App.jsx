@@ -5,14 +5,18 @@ import Header from './components/Header'
 
 function App() {
 
-  const [pokemomTeam, setPokemonTeam] = [];
+  const [pokemonTeam, setPokemonTeam] = useState([]);
 
 
  
 
   async function generateMon () {
 
-    const randomId = Math.floor(Math.random() * 1282 )
+    const min = Math.ceil(1)
+
+    const max = Math.floor(1010)
+
+    const randomId = Math.floor(Math.random() * (max - min) + min);
 
       const pokemon = await getPokemon(randomId)
 
@@ -26,10 +30,22 @@ function App() {
         image: pokemonData.sprites.front_default
       }
 
-        console.log(newPoke)
-     
-  }
+        if (pokemonTeam.length < 6 ){
+          pokemonTeam.push(newPoke)
+          setPokemonTeam(pokemonTeam)
+          console.log(pokemonTeam)
+        }else if (pokemonTeam.length === 6){
+          console.log("team full")
+          
+        }else{
+            console.log("team full try again")
+        }
 
+        console.log(pokemonTeam)
+
+    
+  }
+    
   return (
     <>
       <Header />
