@@ -1,11 +1,17 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import getPokemon  from './assets/js/API.js'
 import "./app.css"
 import Header from './components/Header'
+import PokemonCard from './components/PokemonCard.jsx'
 
 function App() {
 
   const [pokemonTeam, setPokemonTeam] = useState([]);
+
+
+
+  
+  
 
 
  
@@ -15,6 +21,10 @@ function App() {
     const min = Math.ceil(1)
 
     const max = Math.floor(1010)
+
+    const newPokemonTeam = [];
+
+    while(newPokemonTeam.length < 6){
 
     const randomId = Math.floor(Math.random() * (max - min) + min);
 
@@ -27,25 +37,24 @@ function App() {
       const newPoke = {
         id: pokemonData.id,
         name: pokemonData.name,
-        image: pokemonData.sprites.front_default
+        image: pokemonData.sprites.front_default,
+        type: pokemonData.types[0].type.name
       }
+          newPokemonTeam.push(newPoke)
 
-        if (pokemonTeam.length < 6 ){
-          pokemonTeam.push(newPoke)
-          setPokemonTeam(pokemonTeam)
-          console.log(pokemonTeam)
-        }else if (pokemonTeam.length === 6){
-          console.log("team full")
-          
-        }else{
-            console.log("team full try again")
-        }
-
-        console.log(pokemonTeam)
-
-    
   }
-    
+
+  setPokemonTeam(newPokemonTeam)
+
+}
+
+useEffect(() => {
+  
+
+}, [pokemonTeam])
+
+
+    console.log(pokemonTeam)
   return (
     <>
       <Header />
@@ -53,14 +62,15 @@ function App() {
       <div className='main-container'>
         <h2>Generate your team</h2>
         <button onClick={generateMon}>Generate</button>
+        <br></br>
+        <div className='grid-container'>
 
-
-
-
-
-
-
-
+        {pokemonTeam.map(pokemon =>(
+          <PokemonCard key={pokemon.id} pokemon={pokemon} className="grid-item"/>
+        
+        ))}
+        
+      </div>
 
       </div>
 
