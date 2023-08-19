@@ -9,7 +9,7 @@ return (
 <>
 <div className="header-container">
 <h1>Poke Team</h1>
-<p>build your next team of six</p>
+
 
 </div>
 
